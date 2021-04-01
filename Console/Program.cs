@@ -13,7 +13,6 @@ namespace ConsoleUI
         {
             // UserTest();
             // CustomerTest();
-            // aasdasd
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
