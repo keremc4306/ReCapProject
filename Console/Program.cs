@@ -11,8 +11,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            // UserTest();
-            // CustomerTest();
+            //UserTest();
+            //CustomerTest();
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
@@ -25,6 +25,7 @@ namespace ConsoleUI
             });
 
             Console.WriteLine(rental.Message);
+            
         }
 
         private static void CustomerTest()
