@@ -13,7 +13,7 @@ namespace ConsoleUI
         {
             //UserTest();
             //CustomerTest();
-
+            
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             var rental = rentalManager.Add(new Rental
@@ -25,7 +25,6 @@ namespace ConsoleUI
             });
 
             Console.WriteLine(rental.Message);
-            
         }
 
         private static void CustomerTest()
