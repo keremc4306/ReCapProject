@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class RentalManager
+    public class RentalManager:IRentalService
     {
         readonly IRentalDal _rentalDal;
 
