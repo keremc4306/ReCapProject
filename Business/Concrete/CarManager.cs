@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Core.CrossCuttingConcerns.Validation;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -22,9 +23,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            ValidationTool.Validate(new CarValidator(), car);
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
@@ -54,17 +55,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(getCarsByColorId);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            ValidationTool.Validate(new CarValidator(), car);
 
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
-            ValidationTool.Validate(new CarValidator(), car);
 
             _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeleted);
