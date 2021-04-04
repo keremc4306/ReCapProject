@@ -6,6 +6,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,6 +61,12 @@ namespace Business.Concrete
         {
             var getById = _rentalDal.Get(u => u.Id == rentalId);
             return new SuccessDataResult<Rental>(getById);
+        }
+
+        public IDataResult<List<RentDetailDto>> GetRentDetails()
+        {
+            var getRentalDetails = _rentalDal.GetRentDetils();
+            return new SuccessDataResult<List<RentDetailDto>>(getRentalDetails);
         }
 
         [ValidationAspect(typeof(RentalValidator))]
