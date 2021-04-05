@@ -13,17 +13,19 @@ namespace ConsoleUI
         {
             //UserTest();
             //CustomerTest();
-            
+            RentalTest();
+        }
+
+        private static void RentalTest()
+        {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             var rental = rentalManager.Add(new Rental
             {
-
                 CarId = 1004,
-                CustomerId = 5,
+                CustomerId = 2,
                 RentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
             });
-
             Console.WriteLine(rental.Message);
         }
 
