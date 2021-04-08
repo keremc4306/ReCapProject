@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Entities.Concrete
@@ -11,10 +10,7 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public int CarId { get; set; }
-        public string ImagePath { get; set; }
         public DateTime Date { get; set; }
-
-        [NotMapped]
-        public IFormFile Image { get; set; }
+        public string ImagePath { get; set; }
     }
 }

@@ -26,14 +26,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var rentalledCars = _rentalDal.GetAll(
-                r => r.CarId == rental.CarId && (
-                r.ReturnDate == null ||
-                r.ReturnDate > DateTime.Now)).Any();
-
-            if (rentalledCars)
-                return new ErrorResult(Messages.CarIsStillRentalled);
-
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            if (result.Count > 0)
+            {
+                return new ErrorResult(Messages.FailedRentalAddOrUpdate);
+            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }

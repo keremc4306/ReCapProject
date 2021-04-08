@@ -10,39 +10,61 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        readonly IUserDal _userDal;
+        IUserDal _userDal;
         public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
         }
+
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
-        [ValidationAspect(typeof(UserValidator))]
+
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
+
         public IDataResult<List<User>> GetAll()
         {
             var getAll = _userDal.GetAll();
             return new SuccessDataResult<List<User>>(getAll);
         }
+
         public IDataResult<User> GetById(int userId)
         {
             var getById = _userDal.Get(u => u.Id == userId);
             return new SuccessDataResult<User>(getById);
         }
-        [ValidationAspect(typeof(UserValidator))]
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            var getByMail = _userDal.Get(u => u.Email == email);
+            return new SuccessDataResult<User>(getByMail);
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            var getClaims = _userDal.GetClaims(user);
+            return new SuccessDataResult<List<OperationClaim>>(getClaims);
+        }
+
+        public IDataResult<User> GetLastUser()
+        {
+            var lastUser = _userDal.GetAll().LastOrDefault();
+            return new SuccessDataResult<User>(lastUser);
+        }
+
         public IResult Update(User user)
         {
             _userDal.Update(user);
