@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             if (!result.Success)
                 return BadRequest(result);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("getbyid")]
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             if (!result.Success)
                 return BadRequest(result);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("getcardetails")]
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             if (!result.Success)
                 return BadRequest(result);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet]
@@ -64,6 +64,17 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("updatetransactionaloperation")]
+        public IActionResult UpdateTransactionalOperation(Car car)
+        {
+            var result = _carService.UpdateTransactionalOperation(car);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpGet]
         public IActionResult Update(Car car)
         {
@@ -72,7 +83,7 @@ namespace WebAPI.Controllers
             if (!result.Success)
                 return BadRequest(result);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet]

@@ -22,6 +22,7 @@ namespace Business.Constants
         public static string CarAdded = "Araç kayıt işlemi başarılı";
         public static string CarDeleted = "Araç silme işlemi başarılı";
         public static string CarUpdated = "Araç güncelleme işlemi başarılı";
+        public static string CarCouldntBeUpdated = "Aracın günlük fiyatı 200'den yukarı olmalıdır";
 
         //User Messages
         public static string UserAdded = "Kullanıcı kayıt işlemi başarılı";
@@ -50,7 +51,6 @@ namespace Business.Constants
 
         public static string Listed = "Listelendi";
         public static string NameInValid = "İsim geçersiz";
-        public static string PriceInValid = "Geçersiz fiyat";
 
         public static string AuthorizationDenied = "Yetkiniz yok.";
         public static string UserRegistered = "Kayıt oldu.";
@@ -61,13 +61,6 @@ namespace Business.Constants
         public static string UserAlreadyExists = "Kullanıcı mevcut!";
         public static string AccessTokenCreated = "Token oluşturuldu.";
         public static string GetErrorCarMessage = "Bulunamadı";
-
-        public static string Added = "Kart Eklendi";
-
-        public static string Updated = "Kart Bilgisi Güncellendi";
-        public static string Deleted = "Kart Bilgisi Silindi";
-
-        public static string PaymentCompleted = "Ödeme Tamamlandı";
 
         public static string RentalUpdatedReturnDateError { get; internal set; }
         public static string UserListed = "Kullanıcılar Listelendi";
