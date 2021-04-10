@@ -6,6 +6,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,6 +48,12 @@ namespace Business.Concrete
         {
             var getById = _customerDal.Get(u => u.Id == customerId);
             return new SuccessDataResult<Customer>(getById);
+        }
+
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        {
+            var getCustomerDetails = _customerDal.GetCustomerDetails();
+            return new SuccessDataResult<List<CustomerDetailDto>>(getCustomerDetails);
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
