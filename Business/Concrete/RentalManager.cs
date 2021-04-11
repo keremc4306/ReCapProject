@@ -66,7 +66,6 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public IDataResult<List<RentDetailDto>> GetRentDetails()
         {
-            System.Threading.Thread.Sleep(3000);
             var getRentalDetails = _rentalDal.GetRentDetils();
             return new SuccessDataResult<List<RentDetailDto>>(getRentalDetails);
         }
