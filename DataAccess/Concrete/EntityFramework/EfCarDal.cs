@@ -24,11 +24,14 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  Id = car.Id,
+                                 BrandId=brand.Id,
                                  BrandName = brand.Name,
                                  Description = car.Description,
+                                 ColorId = color.Id,
                                  ColorName = color.Name,
                                  ModelYear = car.ModelYear,
                                  DailyPrice = car.DailyPrice
+                                
                              };
 
                 return filter == null
