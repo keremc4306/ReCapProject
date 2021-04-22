@@ -7,6 +7,8 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq.Expressions;
 using System.Linq;
 using System.Text;
 using Core.CrossCuttingConcerns.Validation;
@@ -16,6 +18,7 @@ using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Performance;
+using Core.Utilities.Filter;
 
 namespace Business.Concrete
 {
@@ -101,6 +104,19 @@ namespace Business.Concrete
         {
             var getCarDetails = _carDal.GetCarDetails();
             return new SuccessDataResult<List<CarDetailDto>>(getCarDetails);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByFilter(CarDetailFilterDto carDetailFilterDto)
+        {
+            foreach (PropertyInfo prop in carDetailFilterDto.GetType().GetProperties())
+            {
+                if ((int)prop.GetValue(carDetailFilterDto) == 0)
+                {
+                    prop.SetValue(carDetailFilterDto, null);
+                }
+            }
+            Expression<Func<CarDetailDto, bool>> filter = Filter.DynamicFilter<CarDetailDto, CarDetailFilterDto>(carDetailFilterDto);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(filter));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -101,6 +103,22 @@ namespace WebAPI.Controllers
         public IActionResult GetByBrandId(int brandId)
         {
             var result = _carService.GetCarsByBrandId(brandId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbyfilter")]
+        public IActionResult GetByFilter(int brandId, int colorId)
+        {
+            CarDetailFilterDto carDetailFilterDto = new CarDetailFilterDto
+            {
+                BrandId = brandId,
+                ColorId = colorId
+            };
+            var result = _carService.GetCarDetailsByFilter(carDetailFilterDto);
             if (result.Success)
             {
                 return Ok(result);
