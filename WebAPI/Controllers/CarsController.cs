@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("delete")]
         public IActionResult Delete(Car car)
         {
             var result = _carService.Delete(car);

@@ -42,7 +42,18 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpGet("getbyemail")]
+        public IActionResult GetByEmail(string email)
+        {
+            var result = _customerService.GetByEmail(email);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpGet("add")]
         public IActionResult Add(Customer customer)
         {
             var result = _customerService.Add(customer);
@@ -53,7 +64,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPost("update")]
         public IActionResult Update(Customer customer)
         {
             var result = _customerService.Update(customer);
@@ -64,7 +75,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
+        [HttpGet("delete")]
         public IActionResult Delete(Customer customer)
         {
             var result = _customerService.Delete(customer);

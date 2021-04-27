@@ -11,19 +11,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class CardsController : ControllerBase
     {
-        readonly IBrandService _brandService;
+        private readonly ICardService _cardService;
 
-        public BrandsController(IBrandService brandService)
+        public CardsController(ICardService cardService)
         {
-            _brandService = brandService;
+            _cardService = cardService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _brandService.GetAll();
+            var result = _cardService.GetAll();
 
             if (!result.Success)
                 return BadRequest(result);
@@ -31,10 +31,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        [HttpGet("getbycustomerid")]
+        public IActionResult GetByCustomerId(int customerId)
         {
-            var result = _brandService.GetById(id);
+            var result = _cardService.GetByCustomerId(customerId);
 
             if (!result.Success)
                 return BadRequest(result);
@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("add")]
-        public IActionResult Add(Brand brand)
+        public IActionResult Add(Card card)
         {
-            var result = _brandService.Add(brand);
+            var result = _cardService.Add(card);
 
             if (!result.Success)
                 return BadRequest(result);
@@ -54,9 +54,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update(Brand brand)
+        public IActionResult Update(Card card)
         {
-            var result = _brandService.Update(brand);
+            var result = _cardService.Update(card);
 
             if (!result.Success)
                 return BadRequest(result);
@@ -65,9 +65,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("delete")]
-        public IActionResult Delete(Brand brand)
+        public IActionResult Delete(Card card)
         {
-            var result = _brandService.Delete(brand);
+            var result = _cardService.Delete(card);
 
             if (!result.Success)
                 return BadRequest(result);

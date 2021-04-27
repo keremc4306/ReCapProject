@@ -49,6 +49,11 @@ namespace Business.Constants
         public static string UpdatedCarImage = "Araba için yüklenilen resim başarıyla güncellendi.";
         public static string FailedCarImageAdd = "Bir araba 5'den fazla resme sahip olamaz.";
 
+        public static string CardAdded = "Kart bilgileri kaydedildi";
+        public static string CardDeleted = "Kart bilgileri silindi";
+        public static string CardUpdated = "Kart bilgileri güncellendi";
+        public static string CardAlreadyExists = "Kart daha önceden kaydedilmiş";
+
         public static string Listed = "Listelendi";
         public static string NameInValid = "İsim geçersiz";
 
@@ -56,7 +61,7 @@ namespace Business.Constants
         public static string UserRegistered = "Kayıt oldu.";
 
         public static string UserNotFound = "Kullanıcı bulunamadı.";
-        public static string SuccessfulLogin = "Baraşıyla giriş yapıldı";
+        public static string SuccessfulLogin = "Başarıyla giriş yapıldı";
         public static string PasswordError = "Parola hatası!";
         public static string UserAlreadyExists = "Kullanıcı mevcut!";
         public static string AccessTokenCreated = "Token oluşturuldu.";
