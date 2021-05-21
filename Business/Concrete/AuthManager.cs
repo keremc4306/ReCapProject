@@ -29,6 +29,7 @@ namespace Business.Concrete
             _customerService = customerService;
         }
 
+        [ValidationAspect(typeof(UserRegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;

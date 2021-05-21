@@ -22,6 +22,8 @@ namespace DataAccess.Concrete.EntityFramework
                              on rental.CustomerId equals customer.Id
                              join brand in context.Brands
                              on car.BrandId equals brand.Id
+                             join location in context.Locations
+                             on rental.LocationId equals location.Id
                              join user in context.Users
                              on customer.UserId equals user.Id
                              select new RentDetailDto
@@ -32,6 +34,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  CustomerFirstName = user.FirstName,
                                  CustomerLastName = user.LastName,
                                  CompanyName = customer.CompanyName,
+                                 LocationId = location.Id,
+                                 LocationName = location.Name,
                                  RentDate = rental.RentDate,
                                  ReturnDate = (DateTime)rental.ReturnDate
                              };

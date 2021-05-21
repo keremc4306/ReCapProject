@@ -10,6 +10,8 @@ namespace Entities.DTOs
         public int Id { get; set; }
         public string CarBrand { get; set; }
         public string CarModel { get; set; }
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
         public string CustomerFirstName { get; set; }
         public string CustomerLastName { get; set; }
         public string CompanyName { get; set; }

@@ -25,7 +25,7 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run(CheckCarImageLimit(carImage));
+            var result = BusinessRule.Run(CheckCarImageLimit(carImage));
 
             if (result != null)
             {
@@ -43,7 +43,7 @@ namespace Business.Concrete
         {
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(I => I.Id == carImage.Id).ImagePath;
 
-            var result = BusinessRules.Run(FileHelper.DeleteAsync(oldpath));
+            var result = BusinessRule.Run(FileHelper.DeleteAsync(oldpath));
 
             if (result != null)
             {

@@ -45,7 +45,7 @@ namespace Business.Concrete
         public IResult UpdateTransactionalOperation(Car car)
         {
             _carDal.Update(car);
-            if (car.DailyPrice < 80)
+            if (car.DailyPrice < 250)
                 throw new Exception(Messages.CarCouldntBeUpdated);
 
             _carDal.Update(car);
@@ -53,14 +53,13 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult<Car> GetById(int carId)
+        public IDataResult<CarDetailDto> GetById(int carId)
         {
-            var getById = _carDal.Get(c => c.Id == carId);
-            return new SuccessDataResult<Car>(getById);
+            var getById = _carDal.GetCarDetails(c => c.Id == carId).SingleOrDefault();
+            return new SuccessDataResult<CarDetailDto>(getById);
         }
 
-        [CacheAspect(duration: 10)]
-        [PerformanceAspect(5)]
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             var getAll = _carDal.GetAll();

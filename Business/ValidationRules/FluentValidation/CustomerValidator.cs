@@ -11,7 +11,9 @@ namespace Business.ValidationRules.FluentValidation
         public CustomerValidator()
         {
             RuleFor(customer => customer.UserId).NotEmpty();
-            RuleFor(customer => customer.CompanyName).NotEmpty();
+
+            RuleFor(customer => customer.FindexPoint).GreaterThanOrEqualTo(0);
+            RuleFor(customer => customer.FindexPoint).LessThanOrEqualTo(1900);
         }
     }
 }

@@ -6,6 +6,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
+using Core.Utilities.BusinessRules;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,22 +19,28 @@ namespace Business.Concrete
 {
     public class RentalManager:IRentalService
     {
-        readonly IRentalDal _rentalDal;
+        private readonly IRentalDal _rentalDal;
+        private readonly ICarService _carService;
+        private readonly ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
 
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null);
-            if (result.Count > 0)
-            {
-                return new ErrorResult(Messages.FailedRentalAddOrUpdate);
-            }
+            var result = BusinessRule.Run(CarRentedCheck(rental),
+                FindeksScoreCheck(rental.CustomerId, rental.CarId),
+                UpdateCustomerFindexPoint(rental.CustomerId, rental.CarId));
+
+            if (result != null)
+                return result;
+
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -57,13 +64,17 @@ namespace Business.Concrete
 
         public IDataResult<Rental> GetById(int rentalId)
         {
-            System.Threading.Thread.Sleep(2000);
-            var getById = _rentalDal.Get(u => u.Id == rentalId);
+            var getById = _rentalDal.Get(r => r.Id == rentalId);
             return new SuccessDataResult<Rental>(getById);
         }
 
+        public IDataResult<List<Rental>> GetRentalByCarId(int carId)
+        {
+            var getRentalByCarId = _rentalDal.GetAll(rental => rental.CarId == carId);
+            return new SuccessDataResult<List<Rental>>(getRentalByCarId);
+        }
+
         [CacheAspect]
-        [PerformanceAspect(3)]
         public IDataResult<List<RentDetailDto>> GetRentDetails()
         {
             var getRentalDetails = _rentalDal.GetRentDetils();
@@ -77,6 +88,45 @@ namespace Business.Concrete
 
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
+        }
+
+        private IResult CarRentedCheck(Rental rental)
+        {
+            var rentalledCars = _rentalDal.GetAll(
+                r => r.CarId == rental.CarId && (
+                r.ReturnDate == null ||
+                r.ReturnDate < DateTime.Now)).Any();
+
+            if (rentalledCars)
+                return new ErrorResult(Messages.AddedRental);
+
+            return new SuccessResult();
+        }
+
+        private IResult FindeksScoreCheck(int customerId, int carId)
+        {
+            var customerFindexPoint = _customerService.GetById(customerId).Data.FindexPoint;
+
+            if (customerFindexPoint == 0)
+                return new ErrorResult(Messages.CustomerFindexPointIsZero);
+
+            var carFindexPoint = _carService.GetById(carId).Data.FindexPoint;
+
+            if (customerFindexPoint < carFindexPoint)
+                return new ErrorResult(Messages.CustomerScoreIsInsufficient);
+
+            return new SuccessResult();
+        }
+
+        private IResult UpdateCustomerFindexPoint(int customerId, int carId)
+        {
+            var customer = _customerService.GetById(customerId).Data;
+            var car = _carService.GetById(carId).Data;
+
+            customer.FindexPoint = (car.FindexPoint / 2) + customer.FindexPoint;
+
+            _customerService.Update(customer);
+            return new SuccessResult();
         }
     }
 }

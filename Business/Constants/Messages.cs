@@ -67,6 +67,9 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Token oluşturuldu.";
         public static string GetErrorCarMessage = "Bulunamadı";
 
+        public static string CustomerFindexPointIsZero = "Hiç Findex Puanı'nız bulunamadı";
+        public static string CustomerScoreIsInsufficient = "Findex Puanı'nız yetersiz";
+
         public static string RentalUpdatedReturnDateError { get; internal set; }
         public static string UserListed = "Kullanıcılar Listelendi";
         public static string MaintenanceTime = "Sistem şuan bakımdadır.";

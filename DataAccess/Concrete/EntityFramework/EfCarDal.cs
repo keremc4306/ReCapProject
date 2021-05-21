@@ -30,8 +30,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorId = color.Id,
                                  ColorName = color.Name,
                                  ModelYear = car.ModelYear,
-                                 DailyPrice = car.DailyPrice
-                                
+                                 DailyPrice = car.DailyPrice,
+                                 FindexPoint = car.FindexPoint
                              };
 
                 return filter == null

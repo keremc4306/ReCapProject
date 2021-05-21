@@ -16,7 +16,8 @@ namespace Entities.DTOs
         public string ColorName { get; set; }
         public int ModelYear { get; set; }
         public decimal DailyPrice { get; set; }
-        public List<CarImage> CarImages { get; set; }
+        //public List<CarImage> CarImages { get; set; }
+        public int? FindexPoint { get; set; }
 
     }
 }

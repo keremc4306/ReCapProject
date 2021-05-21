@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Utilities.BusinessRules
 {
-    public class BusinessRules
+    public class BusinessRule
     {
         public static IResult Run(params IResult[] logics)
         {
